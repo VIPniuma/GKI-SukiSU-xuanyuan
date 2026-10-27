@@ -325,3 +325,18 @@ if [[ "$ANDROID_VERSION" == "android16" && "$KERNEL_VERSION" == "6.12" ]]; then
     echo "已修复 setuid_hook.c 重复定义问题"
   fi
 fi
+
+# === 修复：SukiSU 源码的 switch fall-through 在 clang -Werror 下会中断构建 ===
+# 现象: drivers/kernelsu/policy/allowlist.c:456: error: unannotated fall-through
+#       between switch labels [-Werror,-Wimplicit-fallthrough]
+# 做法: 给 SukiSU 每个 C 文件顶部插一条 clang pragma，抑制该警告（不改变代码行为）
+if [ -d ./drivers/kernelsu ]; then
+    FIXED=0
+    for f in $(find ./drivers/kernelsu -name "*.c" 2>/dev/null); do
+        if [ -f "$f" ] && ! grep -q "Wimplicit-fallthrough" "$f"; then
+            sed -i '1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"' "$f"
+            FIXED=$((FIXED + 1))
+        fi
+    done
+    echo "fall-through 修复：已处理 $FIXED 个 SukiSU 源文件"
+fi
