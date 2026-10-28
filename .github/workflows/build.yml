@@ -643,7 +643,8 @@ jobs:
             "SukiSU")
               echo "添加 ${{ inputs.ksu_variant }}..."
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
-              find ./common/drivers/kernelsu -name "*.c" -exec sed -i '1i #pragma clang diagnostic ignored \"-Wimplicit-fallthrough\"' {} \; 2>/dev/null || true
+              find ./common/drivers/kernelsu -name "*.c" -exec sed -i '1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"' {} \; 2>/dev/null || true
+              echo "fallthrough 命中文件数: $(grep -rl "Wimplicit-fallthrough" ./common/drivers/kernelsu 2>/dev/null | wc -l)"
               ;;
             "BakaSU")
               echo "添加 BakaSU..."
@@ -656,7 +657,8 @@ jobs:
               fi
               echo "添加 ${{ inputs.ksu_variant }}..."
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
-              find ./common/drivers/kernelsu -name "*.c" -exec sed -i '1i #pragma clang diagnostic ignored \"-Wimplicit-fallthrough\"' {} \; 2>/dev/null || true
+              find ./common/drivers/kernelsu -name "*.c" -exec sed -i '1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"' {} \; 2>/dev/null || true
+              echo "fallthrough 命中文件数: $(grep -rl "Wimplicit-fallthrough" ./common/drivers/kernelsu 2>/dev/null | wc -l)"
               ;;
           esac
 
