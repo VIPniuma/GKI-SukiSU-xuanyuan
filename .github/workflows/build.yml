@@ -642,7 +642,7 @@ jobs:
               ;;
             "SukiSU")
               echo "添加 ${{ inputs.ksu_variant }}..."
-              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
+              curl -LSs "https://raw.githubusercontent.com/VIPniuma/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
               if [ -f ./common/drivers/kernelsu/Kbuild ]; then
                 sed -i '1i ccflags-y += -Wno-implicit-fallthrough' ./common/drivers/kernelsu/Kbuild
                 find ./common/drivers/kernelsu -name "*.c" -exec sed -i \'1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"\' {} \; 2>/dev/null || true
@@ -661,7 +661,7 @@ jobs:
                 exit 1
               fi
               echo "添加 ${{ inputs.ksu_variant }}..."
-              curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
+              curl -LSs "https://raw.githubusercontent.com/VIPniuma/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
               if [ -f ./common/drivers/kernelsu/Kbuild ]; then
                 sed -i '1i ccflags-y += -Wno-implicit-fallthrough' ./common/drivers/kernelsu/Kbuild
                 find ./common/drivers/kernelsu -name "*.c" -exec sed -i \'1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"\' {} \; 2>/dev/null || true
