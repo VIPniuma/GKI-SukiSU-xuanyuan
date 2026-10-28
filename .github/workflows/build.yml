@@ -643,13 +643,6 @@ jobs:
             "SukiSU")
               echo "添加 ${{ inputs.ksu_variant }}..."
               curl -LSs "https://raw.githubusercontent.com/VIPniuma/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
-              if [ -f ./common/drivers/kernelsu/Kbuild ]; then
-                sed -i '1i ccflags-y += -Wno-implicit-fallthrough' ./common/drivers/kernelsu/Kbuild
-                find ./common/drivers/kernelsu -name "*.c" -exec sed -i \'1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"\' {} \; 2>/dev/null || true
-                echo "Kbuild 命中: $(grep -c Wno-implicit-fallthrough ./common/drivers/kernelsu/Kbuild) 处 | 源文件命中: $(grep -rl Wimplicit-fallthrough ./common/drivers/kernelsu 2>/dev/null | wc -l) 个"
-              else
-                echo "未找到 ./common/drivers/kernelsu/Kbuild"
-              fi
               ;;
             "BakaSU")
               echo "添加 BakaSU..."
@@ -662,13 +655,6 @@ jobs:
               fi
               echo "添加 ${{ inputs.ksu_variant }}..."
               curl -LSs "https://raw.githubusercontent.com/VIPniuma/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
-              if [ -f ./common/drivers/kernelsu/Kbuild ]; then
-                sed -i '1i ccflags-y += -Wno-implicit-fallthrough' ./common/drivers/kernelsu/Kbuild
-                find ./common/drivers/kernelsu -name "*.c" -exec sed -i \'1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"\' {} \; 2>/dev/null || true
-                echo "Kbuild 命中: $(grep -c Wno-implicit-fallthrough ./common/drivers/kernelsu/Kbuild) 处 | 源文件命中: $(grep -rl Wimplicit-fallthrough ./common/drivers/kernelsu 2>/dev/null | wc -l) 个"
-              else
-                echo "未找到 ./common/drivers/kernelsu/Kbuild"
-              fi
               ;;
           esac
 
