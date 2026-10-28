@@ -643,24 +643,8 @@ jobs:
             "SukiSU")
               echo "添加 ${{ inputs.ksu_variant }}..."
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
+              find ./common/drivers/kernelsu -name "*.c" -exec sed -i '1i #pragma clang diagnostic ignored \"-Wimplicit-fallthrough\"' {} \; 2>/dev/null || true
               ;;
-
-       - name: 抑制 SukiSU fall-through 编译警告
-         if: inputs.ksu_variant == 'SukiSU' || inputs.ksu_variant == 'SukiSU(40726)' || inputs.ksu_variant == 'SukiSU(40548)'
-         working-directory: ${{ env.KERNEL_ROOT }}
-         run: |
-           if [ -d ./common/drivers/kernelsu ]; then
-             N=0
-             for f in $(find ./common/drivers/kernelsu -name "*.c" 2>/dev/null); do
-               if ! grep -q "Wimplicit-fallthrough" "$f"; then
-                 sed -i '1i #pragma clang diagnostic ignored "-Wimplicit-fallthrough"' "$f"
-                 N=$((N+1))
-               fi
-             done
-             echo "fall-through 修复：已处理 $N 个 SukiSU 源文件"
-           else
-             echo "未找到 ./common/drivers/kernelsu，跳过 fall-through 修复"
-           fi
             "BakaSU")
               echo "添加 BakaSU..."
               curl -LSs "https://raw.githubusercontent.com/Baka-SU/BakaSU/main/kernel/setup.sh" | bash $BRANCH
@@ -672,6 +656,7 @@ jobs:
               fi
               echo "添加 ${{ inputs.ksu_variant }}..."
               curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash $BRANCH
+              find ./common/drivers/kernelsu -name "*.c" -exec sed -i '1i #pragma clang diagnostic ignored \"-Wimplicit-fallthrough\"' {} \; 2>/dev/null || true
               ;;
           esac
 
